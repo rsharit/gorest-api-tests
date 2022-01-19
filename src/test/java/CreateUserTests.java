@@ -2,21 +2,37 @@
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import utils.httpsRequests.CreateClientUser;
+import utils.users.pojo.User;
 
 public class CreateUserTests {
 
-    @Test(description = "Create a user successfully")
-    public void shouldCreateUser(){
+    @Test(description = "Create a male user successfully")
+    public void shouldCreateMaleUser(){
         int randomNum = (int)(Math.random()*10000);
         String name = "Tenali Ramakrishna";
         String email = "TenaliRamakrishna" + randomNum + "@tst.com";
 
-        new CreateClientUser().createUser(name, "male", email).then()
+        User user = new User(name,email, "male", "active");
+
+        //new CreateClientUser().createUser(name, "male", email).then()
+        new CreateClientUser().createUser(user).then()
         .log()
         .body()
         .statusCode(201)
         .body("data.name", Matchers.equalTo(name));
     }
 
+    @Test(description = "Create a female user successfully, using overloaded method to create json string")
+    public void shouldCreateFemaleUser(){
+        int randomNum = (int)(Math.random()*10000);
+        String name = "Tenalika Ramakrishna";
+        String email = "TenalikaRamakrishna" + randomNum + "@tst.com";
+
+        new CreateClientUser().createUser(name, "female", email).then()
+                .log()
+                .body()
+                .statusCode(201)
+                .body("data.name", Matchers.equalTo(name));
+    }
 
 }
