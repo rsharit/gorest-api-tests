@@ -12,9 +12,8 @@ public class CreateUserTests {
         String name = "Tenali Ramakrishna";
         String email = "TenaliRamakrishna" + randomNum + "@tst.com";
 
-        User user = new User(name,email, "male", "active");
-
-        //new CreateClientUser().createUser(name, "male", email).then()
+        //User user = new User(name,email, "male", "active");
+        User user = User.builder().name(name).email(email).gender("male").status("active").build();
         new CreateClientUser().createUser(user).then()
         .log()
         .body()
