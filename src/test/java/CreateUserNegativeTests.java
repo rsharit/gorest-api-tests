@@ -1,9 +1,7 @@
 import Constants.ServerConstants;
-import io.restassured.http.ContentType;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
 import utils.httpsRequests.CreateClientUser;
-import utils.users.ClientUsers;
 
 import static io.restassured.RestAssured.given;
 

@@ -9,6 +9,13 @@ import static io.restassured.RestAssured.given;
 public class CreateClientUser {
     final String url =  ServerConstants.baseUrl + ServerConstants.postEndPoint;
 
+    /**
+     *
+     * @param name
+     * @param gender
+     * @param email
+     * @return
+     */
     public Response createUser(String name, String gender, String email){
         String userInfo = getUserBody(name, gender, email);
         return given()
@@ -19,6 +26,12 @@ public class CreateClientUser {
                 .body(userInfo)
                 .when()
                 .post(url);
+    }
+
+    public Response getUsersInfo(){
+        return given()
+                .when()
+                .get(url);
     }
 
     /**
