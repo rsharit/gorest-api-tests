@@ -1,4 +1,4 @@
-import io.restassured.http.ContentType;
+import Constants.ServerConstants;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -6,11 +6,12 @@ import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 
 public class GetMethodTests {
+    final String url = ServerConstants.baseUrl + ServerConstants.getEndPoint;
     @Test(description = "Gets the list of all users and validates the status code only")
     public void shouldGetAllUsers(){
         int statusCode = given()
                 .when()
-                .get("https://gorest.co.in/public/v1/users")
+                .get(url)
                 .getStatusCode();
         Assert.assertEquals(statusCode, 200, "Unexpected status code");
     }
@@ -21,7 +22,7 @@ public class GetMethodTests {
     public void getAllUsersLimitIs20(){
                 given()
                 .when()
-                .get("https://gorest.co.in/public/v1/users")
+                .get(url)
                 .then()
                 .statusCode(200)
                 .body("data", Matchers.hasSize(20));
