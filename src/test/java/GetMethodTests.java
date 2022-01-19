@@ -28,25 +28,5 @@ public class GetMethodTests {
 
     }
 
-    @Test(description = "Create a user")
-    public void shouldCreateUser(){
-        int randomNum = (int)(Math.random()*10000);
-        String name = "Tenali Ramakrishna";
-        given()
-                .accept(ContentType.JSON)
-                .contentType(ContentType.JSON)
-                .header("Authorization",
-                        "Bearer 0a5cb4fbc5ef2e2c87e1c600fd2961a2041c9cde441d69c1dc4b8137a7cc663c")
-                .body("{\"name\":\""+ name+"\"," +
-                        " \"gender\":\"male\"," +
-                        " \"email\":\"tenali.ramakrishna" + randomNum + "@15ce.com\" ," +
-                        " \"status\":\"active\"}")
-            .when()
-            .post("https://gorest.co.in/public/v1/users")
-            .then()
-                .log()
-                .body()
-                .statusCode(201)
-                .body("data.name", Matchers.equalTo(name));
-    }
+
 }
