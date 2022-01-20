@@ -1,10 +1,12 @@
 
+import io.restassured.response.Response;
 import org.hamcrest.Matchers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utils.httpsRequests.CommonUtils;
 import utils.httpsRequests.CreateClientUser;
+import utils.users.pojo.GetAllUsersResponse;
 
 
 public class GetMethodTests {
@@ -13,6 +15,7 @@ public class GetMethodTests {
 
     @BeforeClass
     public void initiateUser(){
+        //Arrange
         clientUser = new CreateClientUser();
         commonUtils = new CommonUtils();
     }
@@ -20,19 +23,26 @@ public class GetMethodTests {
 
     @Test(description = "Gets the list of all users and validates the status code only")
     public void shouldGetAllUsers(){
-        int statusCode = clientUser.getUsersInfo()
-                .getStatusCode();
-        Assert.assertEquals(statusCode, 200, "Unexpected status code");
+        //Act
+        Response response = clientUser.getUsersInfo();
+        //Assert
+        commonUtils.validateResponseCode(response, 200);
     }
 
 
 
     @Test(description = "Gets the list of all users and validates limit of users array is 20")
     public void getAllUsersLimitIs20(){
-                clientUser.getUsersInfo()
-                .then().log().body()
-                .statusCode(200)
-                .body("data", Matchers.hasSize(20));
+        //Act
+        Response response = clientUser.getUsersInfo();
+        //Assert
+        commonUtils.validateResponseCode(response, 200);
+
+        GetAllUsersResponse getAllUsersResponse =
+                commonUtils.getResponseObject(GetAllUsersResponse.class, response);
+
+        Assert.assertEquals(getAllUsersResponse.getData().size(), 20);
+
 
     }
 
